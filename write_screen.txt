@@ -1,0 +1,18 @@
+//初期化
+1 CLS:CLP:CLV
+
+//よこのかべ ??は任意の番号(100以下)
+?? GOSUB 100:GOTO ?? 
+100 FOR Y=0 TO 31 : LC 21,Y:?CHR$(1) :NEXT:RETURN
+
+// HP判定
+?? GOSUB 105:GOTO ?? 
+105 IF H=3   
+106 IF H=2 LC 
+107 IF H=1 LC 
+108 IF H=0 END
+109 RETURN
+
+//POKE #900
+//#900から画面のあどれす？
+

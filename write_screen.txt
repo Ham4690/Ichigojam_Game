@@ -23,6 +23,36 @@ ex:
 //POKE #900
 //#900から画面のあどれす？
 
+//イチゴ表示
+5 A=0:B=0:C=0
+30 LC 3,A :?CHR$(255)
+35 LC 9,B :?CHR$(255)
+40 LC 15,C :?CHR$(255)
+
+-------------------------------------------
+//落ちる
+5 A=0:B=0:C=0
+//left落ちる
+?? GOSUB 105:GOTO ?? 
+105 IF A<>23 THEN LC 3,A:?CHR$(255):A=A+1 ELSE A = 0 
+106 RETURN
+
+//center落ちる
+?? GOSUB 110:GOTO ?? 
+110 IF B<>23 THEN LC 9,B:?CHR$(255):B=B+1 ELSE B = 0 
+111 RETURN
+
+//right落ちる
+?? GOSUB 115:GOTO ?? 
+115 IF C<>23 THEN LC 15,C:?CHR$(255):C=C+1 ELSE C = 0 
+116 RETURN
+
+-------------------------------------------
+
+//消す
+?? GOSUB 120 :GOTO ??
+120 LC 3,A-1:?CHR$(0):LC 9,B-1:?CHR$(0):LC 15,C-1:?CHR$(0):RETURN
+
 //test
 1 CLS
 10 GOSUB 100:GOTO 11
@@ -37,4 +67,50 @@ ex:
 100 FOR Y=0 TO 31 : LC 21,Y:?CHR$(1) :NEXT:RETURN
 //?の場合下から順に描かれる
 
+//test2
+0 A=0:B=0:C=0
+30 LC 3,A:?CHR$(255):A=A+1
+32 WAIT120
+35 LC 3,A-1 :?CHR$(0)
+40 LC 3,A:?CHR$(255):A=A+1
+42 WAIT120
+45 LC 3,A-1 :?CHR$(0)
+50 LC 3,A :?CHR$(255):A=A+1
 
+//if_test
+1 A=1
+5 IF A=1 THEN LC 5,5:?CHR$(1) ELSE LC 5,10:?CHR$(255)
+
+//消すテスト
+15 A=0:B=0:C=0
+30 LC 3,0 :?CHR$(255): LC 9,0 :?CHR$(255): LC 15,0 :?CHR$(255)
+35 WAIT120
+40 LC 3,0:?CHR$(0):LC 9,0:?CHR$(0):LC 15,0:?CHR$(0)
+
+//落ちるテスト
+5 B=0
+10 GOSUB 110:GOTO 20 
+110 IF B<>23 THEN LC 3,B:?CHR$(255):B=B+1 ELSE B = 0 
+111 RETURN
+20 GOSUB 120 :GOTO 30
+120 LC 3,A-1:?CHR$(0):LC 9,B-1:?CHR$(0):LC 15,C-1:?CHR$(0):RETURN
+30 GOTO 10
+
+
+//落ちる・壁組み合わせたテスト
+5 CLS:A=0:B=0:C=0:H=3
+7 GOSUB 100:GOTO 10 //壁表示
+10 GOSUB 110:GOTO 20  //苺落とす
+20 GOSUB 120 :GOTO 25 //苺を消す
+25 GOSUB 105:GOTO 30 
+30 GOTO 10
+
+100 FOR Y=0 TO 31 : LC 21,Y:?CHR$(1) :NEXT:RETURN
+105 IF H=3 LC 22,0:?"HP:***"
+106 IF H=2 LC 22,0:?"HP:** "
+107 IF H=1 LC 22,0:?"HP:* "
+108 IF H=0 LC 22,0:?"HP: " : END
+109 RETURN
+110 IF B<>23 THEN LC 9,B:?CHR$(255):B=B+1 ELSE B = 0 
+111 RETURN
+120 LC 3,A-1:?CHR$(0):LC 9,B-1:?CHR$(0):LC 15,C-1:?CHR$(0):RETURN
